@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import moment from 'moment';
+import BodyData from './BodyData.jsx'
 
 class Post extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class Post extends React.Component {
 
     this.state = {
       data: [],
+      expand: false,
     }
     this.fetchData = this.fetchData.bind(this);
   }
@@ -16,24 +18,28 @@ class Post extends React.Component {
     this.fetchData();
   }
 
+
+
 fetchData () {
   axios.get('/api/posts')
   .then((response) => {
-    console.log(response)
-    this.setState({data: response.data.sort()})
+    this.setState({data: response.data})
   })
   .catch((error) => {
     console.log(error)
   })
 }
 
+toggleView() {
+  this.setState({expand: !this.state.expand});
+}
+
 render() {
   return (
       <div>{this.state.data.map((value, index) => {
         const time = moment(this.state.data[index].createdAt).fromNow();
-        console.log(value)
         return (
-          <div className='post'>
+          <div key={index} className='post'>
             <div className='post__byline'>
               <div className='center'>
                 <img
@@ -48,7 +54,7 @@ render() {
             <div className='post__image'>
               <img src={this.state.data[index].imageUrl} />
             </div>
-            <p>{this.state.data[index].body}</p>
+            <BodyData data={this.state} index1={index}/>
             <div className='post__actions'>
               <div className='post__likes'>{this.state.data[index].likes}</div>
               <div className='post__buttons'>
