@@ -1,6 +1,5 @@
-import React from "react";
-
 import Post from "./Post.jsx";
+import React from "react";
 
 function Feed(props) {
   return (

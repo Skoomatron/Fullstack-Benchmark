@@ -12,7 +12,10 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 
 app.get('/api/posts', function(req, res) {
-  // TODO - your code here!
+  if (!res) {
+    res.status(404).send('failed response')
+  }
+  Post.getData(res);
 });
 
 app.listen(PORT, () => {

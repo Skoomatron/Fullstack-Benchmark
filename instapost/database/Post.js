@@ -16,4 +16,14 @@ const postSchema = new mongoose.Schema(
 
 const Post = mongoose.model("Post", postSchema);
 
-module.exports = Post;
+const getData = (res) => {
+  let query = Post.find();
+  query.exec((err, data) => {
+    if (err) {
+      return error;
+    }
+    res.send(data);
+  })
+}
+
+module.exports = {Post, getData};

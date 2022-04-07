@@ -29,8 +29,11 @@ You will create a full-stack application that implements several features for a 
   - [Place Corgi](http://placecorgi.com/) or [Unsplash Source](https://source.unsplash.com/) for placeholder images
 
 HOW TO START THIS APP
-
-- _[Modify this section to tell graders how to start your app]_
+- Navigate in to the instapost directory via your terminal
+- Run NPM install to acquire all dependencies
+- From a split terminal run 'npm run dev:react' to start the transpiler and 'npm run start' to boot the server
+- Open localhost:3000 from your browser to access the webapp
+- Happy coding
 
 **Commit frequently** with informative messages. While there are instructions to commit at the end of each step, these should not be your only commits.
 
