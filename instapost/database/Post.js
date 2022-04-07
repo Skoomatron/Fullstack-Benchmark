@@ -17,7 +17,7 @@ const postSchema = new mongoose.Schema(
 const Post = mongoose.model("Post", postSchema);
 
 const getData = (res) => {
-  let query = Post.find();
+  let query = Post.find().sort({createdAt: 1});
   query.exec((err, data) => {
     if (err) {
       return error;

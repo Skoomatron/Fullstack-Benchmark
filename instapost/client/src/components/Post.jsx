@@ -19,7 +19,8 @@ class Post extends React.Component {
 fetchData () {
   axios.get('/api/posts')
   .then((response) => {
-    this.setState({data: response.data})
+    console.log(response)
+    this.setState({data: response.data.sort()})
   })
   .catch((error) => {
     console.log(error)
