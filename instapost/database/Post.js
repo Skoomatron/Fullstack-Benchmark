@@ -26,4 +26,9 @@ const getData = (res) => {
   })
 }
 
-module.exports = {Post, getData};
+const findID = (postId) => {
+  return Post.findOneAndUpdate({_id: postId}, {$inc: {likes: 1}}, {new: true});
+};
+
+
+module.exports = {Post, getData, findID};

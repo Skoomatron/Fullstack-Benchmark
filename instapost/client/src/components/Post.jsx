@@ -10,9 +10,12 @@ class Post extends React.Component {
       data: [],
       expand: false,
       buttonText: 'Show More',
+      clickedID: null,
+      likes: 0,
     }
     this.fetchData = this.fetchData.bind(this);
     this.togglePosts = this.togglePosts.bind(this);
+    this.clickData = this.clickData.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +42,17 @@ class Post extends React.Component {
       return longFormattedPost;
     }
     return shortFormattedPost;
+  }
+
+  clickData(event, id) {
+    console.log(id, this.state.data)
+    axios.patch(`/api/post/${id}`)
+    .then((response) => {
+      this.setState({likes: response})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
 fetchData () {
@@ -80,7 +94,9 @@ render() {
               <div className='post__actions'>
               <div className='post__likes'>{this.state.data[index].likes}</div>
               <div className='post__buttons'>
-                <button>Like</button>
+                <button onClick={() => {
+                  this.clickData(event, this.state.data[index]._id)
+                }}>Like</button>
                 <button>Comment</button>
               </div>
             </div>

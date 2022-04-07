@@ -18,6 +18,20 @@ app.get('/api/posts', function(req, res) {
   Post.getData(res);
 });
 
+
+
+// need to pass the id down the chain
+app.patch('/api/posts/:postId', function(req, res) {
+  Post.findID(req.params.postId)
+  .then((response) => {
+    res.send(response);
+  })
+  .catch((error) => {
+    res.status(500).send(error, 'no data found at that id')
+  })
+
+})
+
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
