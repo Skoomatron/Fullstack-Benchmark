@@ -1,7 +1,6 @@
 import React from "react";
 import axios from 'axios';
 import moment from 'moment';
-import BodyData from './BodyData.jsx'
 
 class Post extends React.Component {
   constructor(props) {
@@ -10,15 +9,37 @@ class Post extends React.Component {
     this.state = {
       data: [],
       expand: false,
+      buttonText: 'Show More',
     }
     this.fetchData = this.fetchData.bind(this);
+    this.togglePosts = this.togglePosts.bind(this);
   }
 
   componentDidMount() {
     this.fetchData();
   }
 
+  togglePosts() {
+    this.setState({expand: !this.state.expand})
+    if (this.state.expand === false) {
+      this.setState({buttonText: 'Show Less'})
+    } else {
+      this.setState({buttonText: 'Show More'})
+    }
+  }
 
+  postManagement(index) {
+    let longData = this.state.data[index].body;
+    let shortData = longData.split('').slice(0, 144).join('');
+    let longFormattedPost = longData.split('\n');
+    let shortFormattedPost = shortData.split('\n');
+    let workingData = shortFormattedPost;
+
+    if (this.state.expand) {
+      return longFormattedPost;
+    }
+    return shortFormattedPost;
+  }
 
 fetchData () {
   axios.get('/api/posts')
@@ -28,10 +49,6 @@ fetchData () {
   .catch((error) => {
     console.log(error)
   })
-}
-
-toggleView() {
-  this.setState({expand: !this.state.expand});
 }
 
 render() {
@@ -54,8 +71,13 @@ render() {
             <div className='post__image'>
               <img src={this.state.data[index].imageUrl} />
             </div>
-            <BodyData data={this.state} index1={index}/>
-            <div className='post__actions'>
+              <div>{this.state.data.map((value, index) => {
+                return (<div key={index}>{this.postManagement(index)[index]}
+                </div>)
+              })}<button onClick={() => {
+                this.togglePosts()
+              }}>{this.state.buttonText}</button></div>
+              <div className='post__actions'>
               <div className='post__likes'>{this.state.data[index].likes}</div>
               <div className='post__buttons'>
                 <button>Like</button>
