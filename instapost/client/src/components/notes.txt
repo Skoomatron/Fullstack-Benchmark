@@ -1,0 +1,6 @@
+FindOneAndUpdate versue FindByIDAndUpdate
+- Both trigger core 'FineOne' middleware
+- If using inherenet MongoDB _id value FindByIDAndUpdate is preferred
+- FindByIDAndUpdate is similar if using FindByIDAndUpdate({_id: id})
+- They handle undefined results differently
+  - FindByIDAndUpdate will treat undefined as ({_id: null})

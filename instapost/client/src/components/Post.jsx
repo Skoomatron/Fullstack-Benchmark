@@ -44,14 +44,13 @@ class Post extends React.Component {
     return shortFormattedPost;
   }
 
-  clickData(event, id) {
-    console.log(id, this.state.data)
-    axios.patch(`/api/post/${id}`)
+  clickData(event, id) { // working but not re-rendering per click
+    axios.patch(`/api/posts/${id}`, {likes: this.state.likes})
     .then((response) => {
       this.setState({likes: response})
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error, 'error at main level')
     })
   }
 
@@ -59,6 +58,7 @@ fetchData () {
   axios.get('/api/posts')
   .then((response) => {
     this.setState({data: response.data})
+    console.log(this.state)
   })
   .catch((error) => {
     console.log(error)
